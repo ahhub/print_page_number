@@ -63,11 +63,31 @@
         const totalPages = lastPage - firstPage + 1;
         let index = 0;
 
+        const allPages = Array.from({ length: lastPage - firstPage + 1 }, (_, i) => firstPage + i);
+
         for (let i = 0; i < totalPages - 1; i++) {
           initial += pattern[index];
           numbers.push(initial);
           index = (index + 1) % pattern.length;
         }
+
+        allPages.every((page) => {
+          while (!numbers.includes(page)) {
+            initial += pattern[index];
+            numbers.push(initial);
+            index = (index + 1) % pattern.length;
+            ``;
+          }
+          return true;
+        });
+
+        numbers.every((page, index) => {
+          if (!allPages.includes(page)) {
+            numbers[index] = lastPage;
+            return true;
+          }
+          return true;
+        });
 
         document.getElementById('result').textContent = `Generated Numbers: ${numbers.join(', ')}`;
       }
