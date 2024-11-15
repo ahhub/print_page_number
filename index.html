@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number Sequence Generator For Printing</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+      }
+      input {
+        padding: 10px;
+        margin: 5px;
+        width: 200px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      #result {
+        margin-top: 20px;
+        font-size: 1.2em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Number Sequence Generator For Printing</h1>
+    <p>Minimum 8 Pages</p>
+    <input type="number" min="1" id="firstPage" placeholder="Enter First Page" required />
+    <input type="number" min="1" id="lastPage" placeholder="Enter Last Page" required />
+    <button onclick="generateNumbers()">Generate Numbers</button>
+    <div id="result"></div>
+
+    <script>
+      function generateNumbers() {
+        const firstPage = parseInt(document.getElementById('firstPage').value);
+        const lastPage = parseInt(document.getElementById('lastPage').value);
+
+        // Validate inputs
+        if (isNaN(firstPage) || isNaN(lastPage) || firstPage >= lastPage) {
+          document.getElementById('result').textContent = 'Please enter valid page numbers.';
+          return;
+        }
+
+        const numbers = [];
+        numbers.push(firstPage);
+        let initial = firstPage;
+        const pattern = [2, 2, 2, -3, -2, 6, -2, 3];
+        const totalPages = lastPage - firstPage + 1;
+        let index = 0;
+
+        for (let i = 0; i < totalPages - 1; i++) {
+          initial += pattern[index];
+          numbers.push(initial);
+          index = (index + 1) % pattern.length;
+        }
+
+        document.getElementById('result').textContent = `Generated Numbers: ${numbers.join(', ')}`;
+      }
+    </script>
+  </body>
+</html>
